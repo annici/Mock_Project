@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import tools.jackson.databind.ObjectMapper;
 
 import java.math.BigDecimal;
-import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Random;
 
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class MainController {
@@ -38,8 +38,8 @@ public class MainController {
             String account = requestDTO.getAccount();
             String rqUID = requestDTO.getRqUID();
             char firstDigit = clientId.charAt(0);
-            BigDecimal maxLimit = null;
 
+            BigDecimal maxLimit;
             String currency;
             BigDecimal balance;
 
@@ -66,7 +66,7 @@ public class MainController {
             balance = (randomValue.multiply(maxLimit));
 
             //Приводим к  двумя знакам после запятой
-            balance.setScale(2, RoundingMode.HALF_UP);
+            balance = balance.setScale(2, RoundingMode.HALF_UP);
 
             ResponseDTO responseDTO = new ResponseDTO();
 
@@ -79,6 +79,8 @@ public class MainController {
 
             log.error("***************** Logging of RequestDTO *****************" + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestDTO));
             log.error("***************** Logging of ResponseDTO *****************" + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(responseDTO));
+
+            TimeUnit.MILLISECONDS.sleep(2000);
 
             return responseDTO;
         } //close try
