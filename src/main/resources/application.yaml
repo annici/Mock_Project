@@ -1,0 +1,8 @@
+# Конфигурация сервера
+server:
+  port: 8082
+
+# Настройки Spring
+spring:
+  application:
+    name: newMock
